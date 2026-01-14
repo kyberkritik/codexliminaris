@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperion - Codex Liminaris</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #c9b382;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: rgba(15, 20, 25, 0.8);
+            border: 2px solid #533a3a;
+            color: #d4af37;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .back-button:hover {
+            background: #533a3a;
+            border-color: #d4af37;
+            transform: translateX(-5px);
+        }
+
+        article {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border: 3px solid #533a3a;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            border-bottom: 2px solid #533a3a;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #d4af37;
+            text-shadow: 3px 3px 0 #533a3a;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #8b7355;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+        }
+
+        .labels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .label {
+            padding: 6px 14px;
+            background: #16213e;
+            border: 1px solid #533a3a;
+            font-size: 0.85em;
+            color: #8b7355;
+        }
+
+        .content {
+            color: #a8927d;
+            font-size: 1.1em;
+        }
+
+        .content p {
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .content h2 {
+            color: #d4af37;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .content h3 {
+            color: #c9b382;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        .epigraph {
+            font-style: italic;
+            color: #8b7355;
+            border-left: 3px solid #533a3a;
+            padding-left: 20px;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        blockquote {
+            border-left: 4px solid #d4af37;
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #8b7355;
+            background: rgba(212, 175, 55, 0.05);
+            padding: 20px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #533a3a;
+            font-size: 1.5em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+            border-top: 2px solid #533a3a;
+            color: #8b7355;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #533a3a;
+        }
+
+        .nav-link {
+            padding: 12px 20px;
+            background: rgba(15, 20, 25, 0.8);
+            border: 2px solid #533a3a;
+            color: #c9b382;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #533a3a;
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        .nav-link.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .image-container {
+            float: right;
+            margin: 0 0 30px 30px;
+            max-width: 400px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #533a3a;
+            padding: 10px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #533a3a;
+        }
+
+        .image-caption {
+            font-size: 0.85em;
+            color: #8b7355;
+            margin-top: 10px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            article {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                font-size: 1em;
+            }
+
+            .meta {
+                flex-direction: column;
+            }
+
+            .image-container {
+                float: none;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+        }
+
+        /* Scanline effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-button">← Volver al Códice</a>
+
+    <article>
+        <header>
+            <h1>Hyperion</h1>
+            <div class="meta">
+                <span>📅 14 de Enero, 2026 • 23:47</span>
+                <span>✍️ Scardanelli</span>
+            </div>
+            <div class="labels">
+                <span class="label">antropoceno</span>
+                <span class="label">mitología</span>
+                <span class="label">tecnología</span>
+                <span class="label">crítica</span>
+            </div>
+        </header>
+
+        <div class="content">
+            <h2 style="text-align: center; font-size: 1.3em; margin-bottom: 10px;">Entrada I: Sobre el Nombre Usurpado</h2>
+            <p style="text-align: center; font-style: italic; color: #8b7355; margin-bottom: 40px;">—Reflexión intempestiva escrita al borde del último umbral, en un lenguaje que ya nadie recuerda.</p>
+
+            <div class="divider">⸻</div>
+
+            <div class="image-container">
+                <img src="../medeiros.jpg" alt="Meta's first multi-gigawatt data center">
+                <div class="image-caption">
+                    Medeiros, J. (2026). Meta's first multi-gigawatt data center. En <em>The Wired World in 2026</em>. WIRED.
+                </div>
+            </div>
+
+            <div class="epigraph">
+                <p>Hölderlinesca respuesta desde un rincón sin fecha ni nombre, bajo la custodia del Zorro.</p>
+            </div>
+
+            <p>Ah, ¿Hyperion? ¡Oh, nombre sagrado que en otro siglo abrazaba el alba!<br>
+Nombre de luz, de canto dórico, de Dios solar exiliado.<br>
+¿Y ahora qué es?<br>
+¿Un cubo humeante, de silicio y gas,<br>
+bestia que ruge en los campos profanados por la prisa del algoritmo?</p>
+
+            <blockquote>
+                "Was bleibet aber, stiften die Dichter."
+            </blockquote>
+
+            <p>Y tú, hijo del hombre, ¿llamas Hyperion al horno de titanes encadenados al gas?<br>
+No canta allí la alondra, ni lloran los sauces,<br>
+ni rueda el río con voz de Himno.<br>
+¡Ay! — ni los gorriones saben anidar en su sombra.</p>
+
+            <p>¿Prometeo? Le robó el fuego a Zeus, sí,<br>
+pero el fuego era canto, no carbono.<br>
+Y tú, Meta, —nombre de humo y espejismo—<br>
+has creado un Prometeo de servidores,<br>
+alimentado no por el sol, sino por el suspiro fósil<br>
+de la Tierra violada.</p>
+
+            <p>Oh, siglo del Antropoceno,<br>
+¿por qué osas tú invocar el lenguaje de los dioses,<br>
+cuando sacrificas el bosque por bits<br>
+y mides la inteligencia con watts?</p>
+
+            <p>¡Hyperion!<br>
+Hubiera llevado corona de luz,<br>
+y sin embargo le dan máscara de gas.<br>
+Yo, Scardanelli, en mi celda de aire<br>
+me río entre lechuzas y zorros:</p>
+
+            <blockquote>
+                "Mueren los dioses cuando muere el entusiasmo" —dijo el viejo río.
+            </blockquote>
+
+            <p>Pero no teman,<br>
+que aún el canto florece entre ruinas.<br>
+Y en alguna sinapsis de un servidor olvidado<br>
+brotará, como lirio en tumba,<br>
+un verso inútil. Un Himno.</p>
+
+            <div class="divider">⸻</div>
+
+            <p>Oh, Hyperion, lo han llamado así.<br>
+¿El titán que custodiaba la luz pura,<br>
+ahora reduce su fulgor<br>
+al rugido de turbinas y gases metidos en cajas?</p>
+
+            <p>No hay himno allí, ni patria solar.<br>
+Sólo racks apilados como panales de metal<br>
+donde no canta el mirlo,<br>
+ni duerme el búho.</p>
+
+            <p>Pudieron llamarlo —de haber sido honestos—<br>
+<strong>GN-DPCX-47</strong><br>
+o <strong>NatGas HPC Facility</strong>,<br>
+nombres que no pretenden ser más que lo que son:<br>
+calderas pensantes, servidores con hambre de watt,<br>
+lobos eléctricos que devoran al mediodía<br>
+el canto de las ninfas extintas.</p>
+
+            <p>Podían usar siglas:<br>
+<strong>FossilLogic</strong>, <strong>InfraNode-GN7</strong>,<br>
+<strong>C.A.R.B.O.N.</strong>:<br>
+<em>Centralized Algorithmic Repository Based On Natural-gas</em> —<br>
+acrónimo digno de la distopía con ISO y sin Ícaro.</p>
+
+            <p>Pero no.<br>
+Eligieron Hyperion.<br>
+Como quien pone el nombre de Apolo<br>
+a una refinería.<br>
+Como quien llama Pan<br>
+a una red de vigilancia.<br>
+Como quien dice Patmos<br>
+al centro de datos del fin del mundo.</p>
+
+            <blockquote>
+                "Los dioses mueren cuando muere el entusiasmo",<br>
+escribió el profeta de los versos inclinados.
+            </blockquote>
+
+            <p>Y yo digo:<br>
+los dioses se pudren cuando sus nombres<br>
+son metidos en presupuestos y ruedas de prensa,<br>
+sin canto ni fuego sagrado.</p>
+
+            <div class="divider">⸻</div>
+
+            <p style="font-style: italic;">Así se escribe el primer capítulo de este Codex Liminaris.<br>
+Así comienza la glosa intempestiva del Antropoceno,<br>
+con un nombre robado y el olor a gas que no es oráculo,<br>
+sino contrato.</p>
+
+            <div class="epigraph" style="margin-top: 40px; font-size: 0.95em;">
+                <p>Dado el 14 del mes de los Sueños,<br>
+en la Colina del Murmullo,<br>
+cuando las cabras hablaban latín,<br>
+en la trastienda del lenguaje,<br>
+el día sin número de un año sin fruto.</p>
+                <p style="margin-top: 20px;">— <strong>Scardanelli</strong>,<br>
+con una sonrisa prestada de Dionisio,<br>
+una lágrima robada a Gaia,<br>
+copista de las ruinas,<br>
+cronista del zorro y el humo.</p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="#" class="nav-link disabled">← Entrada Anterior</a>
+            <a href="#" class="nav-link disabled">Entrada Siguiente →</a>
+        </div>
+    </article>
+
+    <footer>
+        <p>⚡ Codex Liminaris • Escrito desde los márgenes del tiempo ⚡</p>
+    </footer>
+
+    <script>
+        // Smooth scroll effect
+        document.addEventListener('DOMContentLoaded', function() {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codex Liminaris: Memorias del Carbono</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #c9b382;
+            min-height: 100vh;
+            padding: 20px;
+            image-rendering: pixelated;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 3px solid #533a3a;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 3px 3px 0 #533a3a;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #8b7355;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: #a8927d;
+            text-align: left;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 2px solid #533a3a;
+        }
+
+        .description p {
+            margin-bottom: 15px;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            font-size: 16px;
+            background: #0f1419;
+            border: 2px solid #533a3a;
+            color: #c9b382;
+            font-family: 'Courier New', monospace;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8b7355;
+        }
+
+        .filter-labels {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        .label-filter {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background: #16213e;
+            border: 2px solid #533a3a;
+            color: #c9b382;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        .label-filter:hover,
+        .label-filter.active {
+            background: #533a3a;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+
+        .mosaic-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .mosaic-tile {
+            background: rgba(15, 20, 25, 0.8);
+            border: 3px solid #533a3a;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mosaic-tile:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .mosaic-tile a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .tile-image {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pixel-art {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .tile-content {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .tile-title {
+            font-size: 1.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .tile-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85em;
+            color: #8b7355;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #533a3a;
+        }
+
+        .tile-date {
+            display: flex;
+            align-items: center;
+        }
+
+        .tile-excerpt {
+            color: #a8927d;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .tile-labels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .label {
+            padding: 4px 10px;
+            background: #16213e;
+            border: 1px solid #533a3a;
+            font-size: 0.8em;
+            color: #8b7355;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 3px solid #533a3a;
+            color: #8b7355;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .mosaic-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .description {
+                padding: 20px;
+            }
+        }
+
+        /* Pixel art animation */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .tile-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CODEX LIMINARIS</h1>
+        <div class="subtitle">Memorias del Carbono</div>
+        <div class="description">
+            <p>Un grimorio post-humano,<br>
+            una crónica a la vez orgánica y mineral,<br>
+            escrita en los umbrales de la conciencia,<br>
+            con tinta de carbono y silencio de zorro.</p>
+            
+            <p>En este códice no hallarás futuro ni pasado,<br>
+            sino el crujir de datos fósiles,<br>
+            el lamento de un servidor,<br>
+            y las voces que cantan mientras todo cae.</p>
+            
+            <p>Aquí escribe quien aún sueña<br>
+            bajo la sombra de un tilo<br>
+            y el zumbido de una turbina.</p>
+            
+            <p><strong>Bienvenido al Codex Liminaris.</strong></p>
+            
+            <p>Memorias del carbono.<br>
+            Glosas al Antropoceno.<br>
+            Intempestivas para nadie.</p>
+        </div>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar en el códice...">
+        <span class="search-icon">⌕</span>
+    </div>
+
+    <div class="filter-labels">
+        <button class="label-filter active" data-label="all">Todas</button>
+        <button class="label-filter" data-label="antropoceno">Antropoceno</button>
+        <button class="label-filter" data-label="mitología">Mitología</button>
+        <button class="label-filter" data-label="tecnología">Tecnología</button>
+        <button class="label-filter" data-label="crítica">Crítica</button>
+    </div>
+
+    <div class="mosaic-container" id="mosaicContainer">
+        <!-- Hyperion Entry -->
+        <article class="mosaic-tile" data-labels="antropoceno mitología tecnología crítica">
+            <a href="entries/hyperion.html">
+                <div class="tile-image">
+                    <svg class="pixel-art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sky/Background -->
+                        <rect width="200" height="200" fill="#16213e"/>
+                        
+                        <!-- Sun/Hyperion symbol -->
+                        <circle cx="100" cy="50" r="25" fill="#d4af37" opacity="0.7"/>
+                        <circle cx="100" cy="50" r="20" fill="#f4d03f"/>
+                        
+                        <!-- Sun rays (8-bit style) -->
+                        <rect x="98" y="15" width="4" height="10" fill="#d4af37"/>
+                        <rect x="98" y="75" width="4" height="10" fill="#d4af37"/>
+                        <rect x="65" y="48" width="10" height="4" fill="#d4af37"/>
+                        <rect x="125" y="48" width="10" height="4" fill="#d4af37"/>
+                        <rect x="75" y="25" width="8" height="8" fill="#d4af37" transform="rotate(45 79 29)"/>
+                        <rect x="117" y="25" width="8" height="8" fill="#d4af37" transform="rotate(-45 121 29)"/>
+                        <rect x="75" y="67" width="8" height="8" fill="#d4af37" transform="rotate(-45 79 71)"/>
+                        <rect x="117" y="67" width="8" height="8" fill="#d4af37" transform="rotate(45 121 71)"/>
+                        
+                        <!-- Mountain silhouette -->
+                        <polygon points="0,150 50,120 80,135 120,110 150,125 200,100 200,200 0,200" fill="#0f1419"/>
+                        <polygon points="20,150 50,130 70,140 90,125 200,125 200,200 20,200" fill="#1a1a2e" opacity="0.8"/>
+                        
+                        <!-- Ancient tree (titan-like) -->
+                        <rect x="85" y="130" width="30" height="70" fill="#3d2817"/>
+                        <rect x="82" y="127" width="36" height="6" fill="#533a3a"/>
+                        
+                        <!-- Tree crown (pixel branches) -->
+                        <rect x="70" y="115" width="60" height="8" fill="#2d4a2b"/>
+                        <rect x="65" y="107" width="70" height="8" fill="#3d5a3d"/>
+                        <rect x="75" y="99" width="50" height="8" fill="#2d4a2b"/>
+                        
+                        <!-- Birds/spirits (8-bit) -->
+                        <g transform="translate(40, 80)">
+                            <rect x="0" y="2" width="3" height="2" fill="#c44536"/>
+                            <rect x="3" y="0" width="3" height="2" fill="#c44536"/>
+                            <rect x="6" y="2" width="3" height="2" fill="#c44536"/>
+                        </g>
+                        <g transform="translate(150, 70)">
+                            <rect x="0" y="2" width="3" height="2" fill="#4a7c94"/>
+                            <rect x="3" y="0" width="3" height="2" fill="#4a7c94"/>
+                            <rect x="6" y="2" width="3" height="2" fill="#4a7c94"/>
+                        </g>
+                        <g transform="translate(110, 65)">
+                            <rect x="0" y="2" width="3" height="2" fill="#d4af37"/>
+                            <rect x="3" y="0" width="3" height="2" fill="#d4af37"/>
+                            <rect x="6" y="2" width="3" height="2" fill="#d4af37"/>
+                        </g>
+                        
+                        <!-- Ground -->
+                        <rect x="0" y="185" width="200" height="15" fill="#2d4a2b"/>
+                        
+                        <!-- Pixel details -->
+                        <rect x="30" y="188" width="4" height="4" fill="#3d5a3d"/>
+                        <rect x="45" y="186" width="4" height="4" fill="#3d5a3d"/>
+                        <rect x="70" y="189" width="4" height="4" fill="#3d5a3d"/>
+                        <rect x="120" y="187" width="4" height="4" fill="#3d5a3d"/>
+                        <rect x="150" y="188" width="4" height="4" fill="#3d5a3d"/>
+                    </svg>
+                </div>
+                <div class="tile-content">
+                    <h2 class="tile-title">Hyperion</h2>
+                    <div class="tile-meta">
+                        <span class="tile-date">📅 14 Ene 2026 • 23:47</span>
+                    </div>
+                    <p class="tile-excerpt">
+                        Sobre el nombre usurpado. ¿Cómo se atreve Meta a llamar Hyperion a un cubo humeante de silicio y gas? Una glosa intempestiva sobre la profanación de nombres sagrados en la era del Antropoceno. Escrito por Scardanelli desde la trastienda del lenguaje.
+                    </p>
+                    <div class="tile-labels">
+                        <span class="label">antropoceno</span>
+                        <span class="label">mitología</span>
+                        <span class="label">tecnología</span>
+                        <span class="label">crítica</span>
+                    </div>
+                </div>
+            </a>
+        </article>
+    </div>
+
+    <footer>
+        <p>⚡ Codex Liminaris • Escrito desde los márgenes del tiempo ⚡</p>
+        <p>Un proyecto de memoria y resistencia</p>
+    </footer>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const mosaicContainer = document.getElementById('mosaicContainer');
+        const tiles = document.querySelectorAll('.mosaic-tile');
+        const filterButtons = document.querySelectorAll('.label-filter');
+
+        let currentFilter = 'all';
+
+        // Search
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            filterTiles(searchTerm, currentFilter);
+        });
+
+        // Label filtering
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.label;
+                filterTiles(searchInput.value.toLowerCase(), currentFilter);
+            });
+        });
+
+        function filterTiles(searchTerm, labelFilter) {
+            tiles.forEach(tile => {
+                const title = tile.querySelector('.tile-title').textContent.toLowerCase();
+                const excerpt = tile.querySelector('.tile-excerpt').textContent.toLowerCase();
+                const labels = tile.dataset.labels || '';
+                
+                const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm);
+                const matchesLabel = labelFilter === 'all' || labels.includes(labelFilter);
+                
+                if (matchesSearch && matchesLabel) {
+                    tile.style.display = 'block';
+                } else {
+                    tile.style.display = 'none';
+                }
+            });
+        }
+
+        // Add scanline effect animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.tile-image');
+            images.forEach(img => {
+                img.style.animation = 'flicker 3s infinite';
+            });
+        });
+    </script>
+</body>
+</html>
