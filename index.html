@@ -3,47 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codex Liminaris: Memorias del Carbono</title>
+    <title>Codex Liminaris</title>
     <style>
         :root {
-            /* Dark mode - Neuromancer/Cyberpunk style (default) */
-            --bg-gradient-1: #000000;
-            --bg-gradient-2: #0a0a0a;
-            --bg-gradient-3: #1a1a1a;
-            --text-primary: #00ffff;
-            --text-secondary: #00d4d4;
-            --text-muted: #00a8a8;
-            --accent-gold: #ffcc00;
-            --accent-magenta: #ff00ff;
-            --accent-dark: #1a1a1a;
-            --border-color: #ffcc00;
-            --card-bg: rgba(0, 0, 0, 0.85);
-            --card-bg-light: rgba(0, 0, 0, 0.7);
-            --input-bg: #000000;
-            --shadow: rgba(255, 0, 255, 0.3);
-            --glow-cyan: 0 0 10px #00ffff, 0 0 20px #00ffff;
-            --glow-magenta: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
-            --glow-yellow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+            --bg: #000000;
+            --text: #00b3b3;
+            --text-dim: #007a7a;
+            --accent: #d4a017;
         }
 
         [data-theme="light"] {
-            --bg-gradient-1: #f0f0f0;
-            --bg-gradient-2: #e0e0e0;
-            --bg-gradient-3: #d0d0d0;
-            --text-primary: #0066cc;
-            --text-secondary: #0088cc;
-            --text-muted: #0099dd;
-            --accent-gold: #cc9900;
-            --accent-magenta: #cc00cc;
-            --accent-dark: #666666;
-            --border-color: #cc9900;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --card-bg-light: rgba(255, 255, 255, 0.7);
-            --input-bg: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.2);
-            --glow-cyan: 0 0 5px #0066cc;
-            --glow-magenta: 0 0 5px #cc00cc;
-            --glow-yellow: 0 0 5px #cc9900;
+            --bg: #f5f5f5;
+            --text: #0066cc;
+            --text-dim: #0088cc;
+            --accent: #cc9900;
         }
 
         * {
@@ -53,589 +26,249 @@
         }
 
         body {
-            font-family: 'Courier New', 'Consolas', monospace;
-            background: 
-                linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), var(--border-color) calc(100% - 1px)),
-                linear-gradient(180deg, transparent 0%, transparent calc(100% - 1px), var(--border-color) calc(100% - 1px)),
-                linear-gradient(180deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
-            background-size: 50px 50px, 50px 50px, 100% 100%;
-            color: var(--text-primary);
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            padding: 20px;
-            image-rendering: pixelated;
-            transition: background 0.4s ease, color 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            transition: all 0.4s ease;
         }
 
         .theme-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            padding: 12px 20px;
-            background: var(--card-bg);
-            border: 2px solid var(--accent-magenta);
-            color: var(--accent-magenta);
+            top: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--text-dim);
+            background: transparent;
+            color: var(--text);
             cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-size: 18px;
             transition: all 0.3s;
-            box-shadow: var(--glow-magenta);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
         }
 
         .theme-toggle:hover {
-            background: var(--accent-magenta);
-            color: var(--bg-gradient-1);
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px var(--accent-magenta), 0 0 40px var(--accent-magenta);
+            opacity: 1;
+            border-color: var(--text);
         }
 
         header {
             text-align: center;
-            padding: 40px 20px;
-            border: 3px solid var(--border-color);
-            border-bottom: 5px solid var(--border-color);
-            margin-bottom: 40px;
-            background: var(--card-bg);
-            box-shadow: var(--glow-yellow);
-            position: relative;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, transparent 0%, var(--accent-magenta) 100%);
-            opacity: 0.05;
-            pointer-events: none;
+            margin-bottom: 80px;
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 2.8em;
-            color: var(--text-primary);
-            text-shadow: var(--glow-cyan);
-            margin-bottom: 20px;
-            letter-spacing: 8px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            text-transform: uppercase;
+            font-size: 2.5em;
+            color: var(--text);
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+            font-weight: 300;
         }
 
         .subtitle {
-            font-size: 1.3em;
-            color: var(--accent-magenta);
-            font-style: normal;
-            margin-bottom: 30px;
-            text-shadow: var(--glow-magenta);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .description-toggle {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 20px 0;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            color: var(--border-color);
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
             font-size: 0.9em;
-            transition: all 0.3s;
-            text-transform: uppercase;
+            color: var(--text-dim);
+            font-weight: 300;
             letter-spacing: 2px;
-            font-weight: bold;
         }
 
-        .description-toggle:hover {
-            background: var(--border-color);
-            color: var(--bg-gradient-1);
-            box-shadow: var(--glow-yellow);
-        }
-
-        .description-toggle::after {
-            content: ' ▼';
-            font-size: 0.8em;
-            transition: transform 0.3s;
-            display: inline-block;
-        }
-
-        .description-toggle.active::after {
-            transform: rotate(180deg);
-        }
-
-        .description {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 2;
-            color: var(--text-secondary);
-            text-align: left;
-            padding: 30px;
-            background: var(--card-bg-light);
-            border: 2px solid var(--border-color);
-            font-size: 1.05em;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
-        }
-
-        .description.expanded {
-            max-height: 1000px;
-            opacity: 1;
-            margin-top: 10px;
-        }
-
-        .description p {
-            margin-bottom: 15px;
-        }
-
-        .search-bar {
-            max-width: 600px;
-            margin: 30px auto;
-            position: relative;
-        }
-
-        #searchInput {
-            width: 100%;
-            padding: 12px 40px 12px 15px;
-            font-size: 16px;
-            background: var(--input-bg);
-            border: 2px solid var(--text-primary);
-            color: var(--text-primary);
-            font-family: 'Courier New', monospace;
-        }
-
-        #searchInput::placeholder {
-            color: var(--text-muted);
-        }
-
-        #searchInput:focus {
-            outline: none;
-            border-color: var(--accent-magenta);
-            box-shadow: var(--glow-magenta);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-
-        .filter-labels {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-        }
-
-        .label-filter {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 5px;
-            background: var(--card-bg);
-            border: 2px solid var(--text-primary);
-            color: var(--text-primary);
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-
-        .label-filter:hover,
-        .label-filter.active {
-            background: var(--text-primary);
-            color: var(--bg-gradient-1);
-            border-color: var(--text-primary);
-            box-shadow: var(--glow-cyan);
-        }
-
-        .mosaic-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .mosaic-tile {
-            background: var(--card-bg);
-            border: 3px solid var(--border-color);
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mosaic-tile::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, transparent 0%, var(--accent-magenta) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .mosaic-tile:hover::before {
-            opacity: 0.1;
-        }
-
-        .mosaic-tile:hover {
-            transform: translateY(-5px);
-            border-color: var(--text-primary);
-            box-shadow: var(--glow-cyan);
-        }
-
-        .mosaic-tile a {
-            text-decoration: none;
-            color: inherit;
+        .entry-link {
             display: block;
+            max-width: 500px;
+            margin: 0 auto;
+            text-decoration: none;
+            transition: all 0.4s ease;
         }
 
-        .tile-image {
+        .entry-link:hover {
+            transform: scale(1.02);
+        }
+
+        .entry-image {
             width: 100%;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
-            position: relative;
-            overflow: hidden;
+            height: auto;
+            border: 1px solid var(--text-dim);
+            opacity: 0.85;
+            transition: all 0.4s ease;
         }
 
-        .pixel-art {
-            width: 100%;
-            height: 100%;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
+        .entry-link:hover .entry-image {
+            opacity: 1;
+            border-color: var(--accent);
         }
 
-        .tile-content {
-            padding: 25px;
-            background: var(--card-bg-light);
-            position: relative;
-            z-index: 2;
-        }
-
-        .tile-title {
-            font-size: 1.6em;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            text-shadow: var(--glow-cyan);
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            text-transform: uppercase;
+        .entry-title {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--text);
             letter-spacing: 3px;
-        }
-
-        .tile-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9em;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .tile-date {
-            display: flex;
-            align-items: center;
-        }
-
-        .tile-excerpt {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 15px;
-            font-size: 1.05em;
-        }
-
-        .tile-labels {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .label {
-            padding: 5px 12px;
-            background: var(--card-bg);
-            border: 1px solid var(--accent-magenta);
-            font-size: 0.8em;
-            color: var(--accent-magenta);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 300;
         }
 
         footer {
+            position: fixed;
+            bottom: 30px;
             text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 3px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            text-shadow: var(--glow-cyan);
+            font-size: 0.75em;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            opacity: 0.4;
         }
 
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
             }
-
-            .mosaic-container {
-                grid-template-columns: 1fr;
-                gap: 20px;
+            
+            .entry-link {
+                max-width: 100%;
             }
-
-            .description {
-                padding: 20px;
-            }
-        }
-
-        /* Pixel art animation */
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-        <span id="themeIcon">☀️</span> <span id="themeText">Modo Claro</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span id="themeIcon">○</span>
     </button>
-    
+
     <header>
         <h1>CODEX LIMINARIS</h1>
-        <div class="subtitle">Memorias del Carbono</div>
-        <button class="description-toggle" id="descriptionToggle">Sobre el Codex</button>
-        <div class="description" id="description">
-            <p>Un grimorio post-humano,<br>
-            una crónica a la vez orgánica y mineral,<br>
-            escrita en los umbrales de la conciencia,<br>
-            con tinta de carbono y silencio de zorro.</p>
-            
-            <p>En este códice no hallarás futuro ni pasado,<br>
-            sino el crujir de datos fósiles,<br>
-            el lamento de un servidor,<br>
-            y las voces que cantan mientras todo cae.</p>
-            
-            <p>Aquí escribe quien aún sueña<br>
-            bajo la sombra de un tilo<br>
-            y el zumbido de una turbina.</p>
-            
-            <p><strong>Bienvenido al Codex Liminaris.</strong></p>
-            
-            <p>Memorias del carbono.<br>
-            Glosas al Antropoceno.<br>
-            Intempestivas para nadie.</p>
-        </div>
+        <p class="subtitle">MEMORIAS DEL UMBRAL</p>
     </header>
 
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Buscar en el códice...">
-        <span class="search-icon">⌕</span>
-    </div>
-
-    <div class="filter-labels">
-        <button class="label-filter active" data-label="all">Todas</button>
-        <button class="label-filter" data-label="antropoceno">Antropoceno</button>
-        <button class="label-filter" data-label="mitología">Mitología</button>
-        <button class="label-filter" data-label="tecnología">Tecnología</button>
-        <button class="label-filter" data-label="crítica">Crítica</button>
-    </div>
-
-    <div class="mosaic-container" id="mosaicContainer">
-        <!-- Hyperion Entry -->
-        <article class="mosaic-tile" data-labels="antropoceno mitología tecnología crítica">
-            <a href="entries/hyperion.html">
-                <div class="tile-image">
-                    <svg class="pixel-art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Sky/Background -->
-                        <rect width="200" height="200" fill="#16213e"/>
-                        
-                        <!-- Sun/Hyperion symbol -->
-                        <circle cx="100" cy="50" r="25" fill="#d4af37" opacity="0.7"/>
-                        <circle cx="100" cy="50" r="20" fill="#f4d03f"/>
-                        
-                        <!-- Sun rays (8-bit style) -->
-                        <rect x="98" y="15" width="4" height="10" fill="#d4af37"/>
-                        <rect x="98" y="75" width="4" height="10" fill="#d4af37"/>
-                        <rect x="65" y="48" width="10" height="4" fill="#d4af37"/>
-                        <rect x="125" y="48" width="10" height="4" fill="#d4af37"/>
-                        <rect x="75" y="25" width="8" height="8" fill="#d4af37" transform="rotate(45 79 29)"/>
-                        <rect x="117" y="25" width="8" height="8" fill="#d4af37" transform="rotate(-45 121 29)"/>
-                        <rect x="75" y="67" width="8" height="8" fill="#d4af37" transform="rotate(-45 79 71)"/>
-                        <rect x="117" y="67" width="8" height="8" fill="#d4af37" transform="rotate(45 121 71)"/>
-                        
-                        <!-- Mountain silhouette -->
-                        <polygon points="0,150 50,120 80,135 120,110 150,125 200,100 200,200 0,200" fill="#0f1419"/>
-                        <polygon points="20,150 50,130 70,140 90,125 200,125 200,200 20,200" fill="#1a1a2e" opacity="0.8"/>
-                        
-                        <!-- Ancient tree (titan-like) -->
-                        <rect x="85" y="130" width="30" height="70" fill="#3d2817"/>
-                        <rect x="82" y="127" width="36" height="6" fill="#533a3a"/>
-                        
-                        <!-- Tree crown (pixel branches) -->
-                        <rect x="70" y="115" width="60" height="8" fill="#2d4a2b"/>
-                        <rect x="65" y="107" width="70" height="8" fill="#3d5a3d"/>
-                        <rect x="75" y="99" width="50" height="8" fill="#2d4a2b"/>
-                        
-                        <!-- Birds/spirits (8-bit) -->
-                        <g transform="translate(40, 80)">
-                            <rect x="0" y="2" width="3" height="2" fill="#c44536"/>
-                            <rect x="3" y="0" width="3" height="2" fill="#c44536"/>
-                            <rect x="6" y="2" width="3" height="2" fill="#c44536"/>
-                        </g>
-                        <g transform="translate(150, 70)">
-                            <rect x="0" y="2" width="3" height="2" fill="#4a7c94"/>
-                            <rect x="3" y="0" width="3" height="2" fill="#4a7c94"/>
-                            <rect x="6" y="2" width="3" height="2" fill="#4a7c94"/>
-                        </g>
-                        <g transform="translate(110, 65)">
-                            <rect x="0" y="2" width="3" height="2" fill="#d4af37"/>
-                            <rect x="3" y="0" width="3" height="2" fill="#d4af37"/>
-                            <rect x="6" y="2" width="3" height="2" fill="#d4af37"/>
-                        </g>
-                        
-                        <!-- Ground -->
-                        <rect x="0" y="185" width="200" height="15" fill="#2d4a2b"/>
-                        
-                        <!-- Pixel details -->
-                        <rect x="30" y="188" width="4" height="4" fill="#3d5a3d"/>
-                        <rect x="45" y="186" width="4" height="4" fill="#3d5a3d"/>
-                        <rect x="70" y="189" width="4" height="4" fill="#3d5a3d"/>
-                        <rect x="120" y="187" width="4" height="4" fill="#3d5a3d"/>
-                        <rect x="150" y="188" width="4" height="4" fill="#3d5a3d"/>
-                    </svg>
-                </div>
-                <div class="tile-content">
-                    <h2 class="tile-title">Hyperion</h2>
-                    <div class="tile-meta">
-                        <span class="tile-date">📅 14 Ene 2026 • 23:47</span>
-                    </div>
-                    <p class="tile-excerpt">
-                        Sobre el nombre usurpado. ¿Cómo se atreve Meta a llamar Hyperion a un cubo humeante de silicio y gas? Una glosa intempestiva sobre la profanación de nombres sagrados en la era del Antropoceno. Escrito por Scardanelli desde la trastienda del lenguaje.
-                    </p>
-                    <div class="tile-labels">
-                        <span class="label">antropoceno</span>
-                        <span class="label">mitología</span>
-                        <span class="label">tecnología</span>
-                        <span class="label">crítica</span>
-                    </div>
-                </div>
-            </a>
-        </article>
-    </div>
+    <a href="entries/hyperion.html" class="entry-link">
+        <svg class="entry-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dark polluted sky -->
+            <rect width="200" height="200" fill="#0f0f0f"/>
+            <rect x="0" y="0" width="200" height="80" fill="#1a1410"/>
+            
+            <!-- Faded sun (mythical Hyperion) behind pollution -->
+            <circle cx="100" cy="40" r="18" fill="#d4a017" opacity="0.3"/>
+            <circle cx="100" cy="40" r="14" fill="#c9a226" opacity="0.4"/>
+            
+            <!-- Polluted clouds/smoke -->
+            <ellipse cx="70" cy="50" rx="25" ry="12" fill="#3a3632" opacity="0.6"/>
+            <ellipse cx="130" cy="55" rx="30" ry="15" fill="#3a3632" opacity="0.5"/>
+            <ellipse cx="100" cy="65" rx="20" ry="10" fill="#4a4642" opacity="0.4"/>
+            
+            <!-- Data center complex (cubical, industrial) -->
+            <!-- Main building -->
+            <rect x="70" y="120" width="60" height="60" fill="#2a2a2a"/>
+            <rect x="72" y="122" width="56" height="56" fill="#1a1a1a"/>
+            
+            <!-- Server racks windows (glowing) -->
+            <rect x="78" y="130" width="8" height="12" fill="#00cccc" opacity="0.7"/>
+            <rect x="90" y="130" width="8" height="12" fill="#00cccc" opacity="0.7"/>
+            <rect x="102" y="130" width="8" height="12" fill="#00cccc" opacity="0.7"/>
+            <rect x="114" y="130" width="8" height="12" fill="#00cccc" opacity="0.7"/>
+            
+            <rect x="78" y="146" width="8" height="12" fill="#00b3b3" opacity="0.6"/>
+            <rect x="90" y="146" width="8" height="12" fill="#00b3b3" opacity="0.6"/>
+            <rect x="102" y="146" width="8" height="12" fill="#00b3b3" opacity="0.6"/>
+            <rect x="114" y="146" width="8" height="12" fill="#00b3b3" opacity="0.6"/>
+            
+            <rect x="78" y="162" width="8" height="12" fill="#009999" opacity="0.5"/>
+            <rect x="90" y="162" width="8" height="12" fill="#009999" opacity="0.5"/>
+            <rect x="102" y="162" width="8" height="12" fill="#009999" opacity="0.5"/>
+            <rect x="114" y="162" width="8" height="12" fill="#009999" opacity="0.5"/>
+            
+            <!-- Side building wings -->
+            <rect x="50" y="140" width="20" height="40" fill="#333333"/>
+            <rect x="130" y="140" width="20" height="40" fill="#333333"/>
+            
+            <!-- Small windows on side buildings -->
+            <rect x="54" y="145" width="4" height="6" fill="#00cccc" opacity="0.5"/>
+            <rect x="60" y="145" width="4" height="6" fill="#00cccc" opacity="0.5"/>
+            <rect x="54" y="155" width="4" height="6" fill="#00b3b3" opacity="0.5"/>
+            <rect x="60" y="155" width="4" height="6" fill="#00b3b3" opacity="0.5"/>
+            <rect x="54" y="165" width="4" height="6" fill="#009999" opacity="0.5"/>
+            <rect x="60" y="165" width="4" height="6" fill="#009999" opacity="0.5"/>
+            
+            <rect x="134" y="145" width="4" height="6" fill="#00cccc" opacity="0.5"/>
+            <rect x="142" y="145" width="4" height="6" fill="#00cccc" opacity="0.5"/>
+            <rect x="134" y="155" width="4" height="6" fill="#00b3b3" opacity="0.5"/>
+            <rect x="142" y="155" width="4" height="6" fill="#00b3b3" opacity="0.5"/>
+            <rect x="134" y="165" width="4" height="6" fill="#009999" opacity="0.5"/>
+            <rect x="142" y="165" width="4" height="6" fill="#009999" opacity="0.5"/>
+            
+            <!-- Cooling towers/chimneys -->
+            <rect x="45" y="100" width="12" height="40" fill="#3d3d3d"/>
+            <rect x="143" y="100" width="12" height="40" fill="#3d3d3d"/>
+            
+            <!-- Smoke/exhaust from towers (natural gas burning) -->
+            <rect x="47" y="92" width="8" height="8" fill="#6a6a6a" opacity="0.7"/>
+            <rect x="45" y="84" width="12" height="8" fill="#7a7a7a" opacity="0.6"/>
+            <rect x="44" y="76" width="14" height="8" fill="#8a8a8a" opacity="0.5"/>
+            <rect x="43" y="68" width="16" height="8" fill="#9a9a9a" opacity="0.4"/>
+            
+            <rect x="145" y="92" width="8" height="8" fill="#6a6a6a" opacity="0.7"/>
+            <rect x="143" y="84" width="12" height="8" fill="#7a7a7a" opacity="0.6"/>
+            <rect x="142" y="76" width="14" height="8" fill="#8a8a8a" opacity="0.5"/>
+            <rect x="141" y="68" width="16" height="8" fill="#9a9a9a" opacity="0.4"/>
+            
+            <!-- Ground/concrete -->
+            <rect x="0" y="180" width="200" height="20" fill="#2a2a26"/>
+            
+            <!-- Dead/withered trees (contrast to the mythical) -->
+            <rect x="20" y="165" width="3" height="15" fill="#4a3a2a"/>
+            <line x1="21.5" y1="168" x2="18" y2="165" stroke="#4a3a2a" stroke-width="1.5"/>
+            <line x1="21.5" y1="168" x2="25" y2="165" stroke="#4a3a2a" stroke-width="1.5"/>
+            
+            <rect x="175" y="168" width="3" height="12" fill="#4a3a2a"/>
+            <line x1="176.5" y1="171" x2="173" y2="168" stroke="#4a3a2a" stroke-width="1.5"/>
+            <line x1="176.5" y1="171" x2="180" y2="168" stroke="#4a3a2a" stroke-width="1.5"/>
+            
+            <!-- Industrial pipes -->
+            <rect x="60" y="178" width="80" height="3" fill="#555555"/>
+            <rect x="80" y="175" width="3" height="5" fill="#555555"/>
+            <rect x="110" y="175" width="3" height="5" fill="#555555"/>
+            
+            <!-- Warning sign (8-bit) -->
+            <rect x="10" y="170" width="8" height="10" fill="#d4a017"/>
+            <polygon points="14,171 11,176 17,176" fill="#0f0f0f"/>
+            <rect x="13.5" y="173" width="1" height="2" fill="#0f0f0f"/>
+            
+            <!-- Meta logo hint (stylized M) -->
+            <text x="88" y="138" font-family="monospace" font-size="10" font-weight="bold" fill="#d4a017" opacity="0.6">M</text>
+        </svg>
+        <div class="entry-title">HYPERION</div>
+    </a>
 
     <footer>
-        <p>Codex Liminaris • Escrito desde los márgenes del tiempo</p>
-        <p>Un proyecto de memoria y resistencia</p>
+        CODEX · 2026
     </footer>
 
     <script>
-        // Description toggle functionality
-        const descriptionToggle = document.getElementById('descriptionToggle');
-        const description = document.getElementById('description');
-
-        descriptionToggle.addEventListener('click', function() {
-            description.classList.toggle('expanded');
-            this.classList.toggle('active');
-        });
-
-        // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
         const html = document.documentElement;
 
-        // Check for saved theme preference or default to 'dark'
         const currentTheme = localStorage.getItem('theme') || 'dark';
         html.setAttribute('data-theme', currentTheme);
-        updateThemeButton(currentTheme);
+        updateIcon(currentTheme);
 
         themeToggle.addEventListener('click', function() {
             const theme = html.getAttribute('data-theme');
             const newTheme = theme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateThemeButton(newTheme);
+            updateIcon(newTheme);
         });
 
-        function updateThemeButton(theme) {
-            if (theme === 'dark') {
-                themeIcon.textContent = '☀️';
-                themeText.textContent = 'Modo Claro';
-            } else {
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'Modo Oscuro';
-            }
+        function updateIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '○' : '●';
         }
-
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        const mosaicContainer = document.getElementById('mosaicContainer');
-        const tiles = document.querySelectorAll('.mosaic-tile');
-        const filterButtons = document.querySelectorAll('.label-filter');
-
-        let currentFilter = 'all';
-
-        // Search
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            filterTiles(searchTerm, currentFilter);
-        });
-
-        // Label filtering
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                currentFilter = this.dataset.label;
-                filterTiles(searchInput.value.toLowerCase(), currentFilter);
-            });
-        });
-
-        function filterTiles(searchTerm, labelFilter) {
-            tiles.forEach(tile => {
-                const title = tile.querySelector('.tile-title').textContent.toLowerCase();
-                const excerpt = tile.querySelector('.tile-excerpt').textContent.toLowerCase();
-                const labels = tile.dataset.labels || '';
-                
-                const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm);
-                const matchesLabel = labelFilter === 'all' || labels.includes(labelFilter);
-                
-                if (matchesSearch && matchesLabel) {
-                    tile.style.display = 'block';
-                } else {
-                    tile.style.display = 'none';
-                }
-            });
-        }
-
-        // Add scanline effect animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('.tile-image');
-            images.forEach(img => {
-                img.style.animation = 'flicker 3s infinite';
-            });
-        });
     </script>
 </body>
 </html>
